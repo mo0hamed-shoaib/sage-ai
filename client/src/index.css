@@ -1,0 +1,257 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import "tailwindcss";
+
+/* Custom styles for the chat application */
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Theme CSS Custom Properties */
+:root {
+  /* Default theme colors (will be overridden by theme system) */
+  --color-primary: #10b981;
+  --color-primaryHover: #059669;
+  --color-accent: #f56565;
+  --color-accentHover: #e53e3e;
+  --color-sidebar: #2d3748;
+  --color-chatBg: #374151;
+  --color-userMessage: #10b981;
+  --color-aiMessage: #4a5568;
+  --color-textPrimary: #ffffff;
+  --color-textSecondary: #e2e8f0;
+  --color-border: #4a5568;
+  --color-inputBg: #4a5568;
+  --color-inputBorder: #6b7280;
+  --color-buttonBg: #10b981;
+  --color-buttonHover: #059669;
+  --color-surface: #2d3748;
+  --color-surfaceHover: #374151;
+}
+
+/* Theme-specific overrides */
+.theme-modern {
+  --color-primary: #10b981;
+  --color-primaryHover: #059669;
+  --color-accent: #f56565;
+  --color-accentHover: #e53e3e;
+  --color-sidebar: #2d3748;
+  --color-chatBg: #374151;
+  --color-userMessage: #10b981;
+  --color-aiMessage: #4a5568;
+  --color-textPrimary: #ffffff;
+  --color-textSecondary: #e2e8f0;
+  --color-border: #4a5568;
+  --color-inputBg: #4a5568;
+  --color-inputBorder: #6b7280;
+  --color-buttonBg: #10b981;
+  --color-buttonHover: #059669;
+  --color-surface: #2d3748;
+  --color-surfaceHover: #374151;
+}
+
+.theme-ocean {
+  --color-primary: #1e3a8a;
+  --color-primaryHover: #1e40af;
+  --color-accent: #ff6b6b;
+  --color-accentHover: #ff5252;
+  --color-sidebar: #1e293b;
+  --color-chatBg: #334155;
+  --color-userMessage: #312e81;
+  --color-aiMessage: #475569;
+  --color-textPrimary: #f1f5f9;
+  --color-textSecondary: #cbd5e1;
+  --color-border: #475569;
+  --color-inputBg: #475569;
+  --color-inputBorder: #64748b;
+  --color-buttonBg: #1e3a8a;
+  --color-buttonHover: #1e40af;
+  --color-surface: #1e293b;
+  --color-surfaceHover: #334155;
+}
+
+.theme-minimalist {
+  --color-primary: #22c55e;
+  --color-primaryHover: #16a34a;
+  --color-accent: #fb7185;
+  --color-accentHover: #f43f5e;
+  --color-sidebar: #fefefe;
+  --color-chatBg: #ffffff;
+  --color-userMessage: #22c55e;
+  --color-aiMessage: #fafaf9;
+  --color-textPrimary: #1f2937;
+  --color-textSecondary: #64748b;
+  --color-border: #e2e8f0;
+  --color-inputBg: #ffffff;
+  --color-inputBorder: #d1d5db;
+  --color-buttonBg: #22c55e;
+  --color-buttonHover: #16a34a;
+  --color-surface: #ffffff;
+  --color-surfaceHover: #f8fafc;
+}
+
+.theme-sunset {
+  --color-primary: #a855f7;
+  --color-primaryHover: #9333ea;
+  --color-accent: #f97316;
+  --color-accentHover: #ea580c;
+  --color-sidebar: #faf5ff;
+  --color-chatBg: #fefbff;
+  --color-userMessage: #a855f7;
+  --color-aiMessage: #fdf2f8;
+  --color-textPrimary: #581c87;
+  --color-textSecondary: #6b7280;
+  --color-border: #e9d5ff;
+  --color-inputBg: #ffffff;
+  --color-inputBorder: #d8b4fe;
+  --color-buttonBg: #a855f7;
+  --color-buttonHover: #9333ea;
+  --color-surface: #ffffff;
+  --color-surfaceHover: #faf5ff;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-textSecondary);
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-thumb {
+  background: #4b5563;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* Smooth transitions */
+* {
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Custom animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Glassmorphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-accent) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Focus styles */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+  focus-ring-color: var(--color-primary);
+}
+
+/* Subtle, thin scrollbar for chat input textarea (high specificity, cross-browser) */
+textarea.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+.dark textarea.custom-scrollbar {
+  scrollbar-color: #374151 transparent;
+}
+textarea.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+textarea.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 2px;
+}
+textarea.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-textSecondary);
+}
+textarea.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.dark textarea.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #374151;
+}
+.dark textarea.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+/* Theme-specific utility classes */
+.theme-modern .bg-sidebar,
+.theme-ocean .bg-sidebar,
+.theme-minimalist .bg-sidebar,
+.theme-sunset .bg-sidebar {
+  background-color: var(--color-sidebar);
+}
+
+.theme-modern .bg-chat,
+.theme-ocean .bg-chat,
+.theme-minimalist .bg-chat,
+.theme-sunset .bg-chat {
+  background-color: var(--color-chatBg);
+}
+
+.theme-modern .text-primary,
+.theme-ocean .text-primary,
+.theme-minimalist .text-primary,
+.theme-sunset .text-primary {
+  color: var(--color-textPrimary);
+}
+
+.theme-modern .text-secondary,
+.theme-ocean .text-secondary,
+.theme-minimalist .text-secondary,
+.theme-sunset .text-secondary {
+  color: var(--color-textSecondary);
+}
+
+.theme-modern .border-theme,
+.theme-ocean .border-theme,
+.theme-minimalist .border-theme,
+.theme-sunset .border-theme {
+  border-color: var(--color-border);
+}
