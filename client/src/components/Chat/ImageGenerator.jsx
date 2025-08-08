@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Image, Download, RefreshCw, Settings, X } from 'lucide-react'
 import Button from '../ui/Button'
 import { useToast } from '../../context/ToastContext'
+import { API_ENDPOINTS } from '../../config/api'
 
 const ImageGenerator = ({ onClose, onImageGenerated }) => {
     const [prompt, setPrompt] = useState('')
@@ -24,7 +25,7 @@ const ImageGenerator = ({ onClose, onImageGenerated }) => {
 
     const loadModels = async () => {
         try {
-            const response = await fetch('http://localhost:5001/api/image-models')
+            const response = await fetch(API_ENDPOINTS.IMAGE_MODELS)
             const data = await response.json()
             setAvailableModels(data.models)
         } catch (error) {
@@ -42,7 +43,7 @@ const ImageGenerator = ({ onClose, onImageGenerated }) => {
         setLoading(true)
         setError(null)
         try {
-            const response = await fetch('http://localhost:5001/api/generate-image', {
+            const response = await fetch(API_ENDPOINTS.GENERATE_IMAGE, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

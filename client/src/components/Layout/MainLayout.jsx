@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Sidebar from "../Sidebar/Sidebar";
 import ChatArea from "../Chat/ChatArea";
 import { useToast } from "../../context/ToastContext";
+import { API_ENDPOINTS } from "../../config/api";
 
 // ErrorBoundary component for fallback UI
 class ErrorBoundary extends React.Component {
@@ -250,7 +251,7 @@ const MainLayout = () => {
           const formData = new FormData();
           formData.append("file", file);
           toast.info(`Uploading file: ${file.name}`);
-          const uploadRes = await fetch("http://localhost:5001/api/upload", {
+          const uploadRes = await fetch(API_ENDPOINTS.UPLOAD, {
             method: "POST",
             body: formData,
           });
@@ -269,7 +270,7 @@ const MainLayout = () => {
       }
 
       // Make API call to Groq backend
-      const response = await fetch("http://localhost:5001/api/chat", {
+      const response = await fetch(API_ENDPOINTS.CHAT, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

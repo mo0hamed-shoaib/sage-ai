@@ -9,6 +9,9 @@ const fs = require('fs');
 const OpenAI = require('openai');
 const path = require('path');
 
+// For Vercel deployment, we need to handle file uploads differently
+const isVercel = process.env.VERCEL === '1';
+
 dotenv.config();
 
 const app = express();
@@ -22,7 +25,12 @@ const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const HUGGING_FACE_API_KEY = process.env.HUGGING_FACE_API_KEY;
 
 // Multer setup for file uploads
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ 
+    dest: isVercel ? '/tmp/' : 'uploads/',
+    limits: {
+        fileSize: 10 * 1024 * 1024, // 10MB limit
+    }
+});
 
 // OpenAI API setup
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
@@ -240,21 +248,44 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
             file: fileStream,
             purpose: 'assistants'
         });
-        fs.unlinkSync(req.file.path);
+        
+        // Clean up the temporary file
+        try {
+            fs.unlinkSync(req.file.path);
+        } catch (cleanupError) {
+            console.warn('Failed to cleanup temporary file:', cleanupError);
+        }
+        
         res.json({ file_id: response.id, file: response });
     } catch (error) {
         console.error('OpenAI File Upload Error:', error);
+        
+        // Clean up the temporary file on error
+        try {
+            if (req.file && req.file.path) {
+                fs.unlinkSync(req.file.path);
+            }
+        } catch (cleanupError) {
+            console.warn('Failed to cleanup temporary file on error:', cleanupError);
+        }
+        
         res.status(500).json({ error: 'Failed to upload file to OpenAI', details: error.message, stack: error.stack });
     }
 });
 
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log('Groq API integration ready!');
-    console.log('Hugging Face image generation ready!');
-    if (!HUGGING_FACE_API_KEY || HUGGING_FACE_API_KEY === 'hf_...') {
-        console.log('⚠️  Please add your Hugging Face API key to use image generation');
-        console.log('   Get your free API key from: https://huggingface.co/settings/tokens');
-    }
-});
+// For Vercel deployment
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 5001;
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+        console.log('Groq API integration ready!');
+        console.log('Hugging Face image generation ready!');
+        if (!HUGGING_FACE_API_KEY || HUGGING_FACE_API_KEY === 'hf_...') {
+            console.log('⚠️  Please add your Hugging Face API key to use image generation');
+            console.log('   Get your free API key from: https://huggingface.co/settings/tokens');
+        }
+    });
+}
+
+// Export for Vercel
+module.exports = app;

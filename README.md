@@ -39,11 +39,13 @@ A stunning, modern AI assistant interface built with React, Vite, and Tailwind C
 
 ## 🚀 Tech Stack
 
-- **Framework**: React 18 with Vite
+- **Frontend**: React 18 with Vite
+- **Backend**: Node.js with Express
 - **Styling**: Tailwind CSS with custom dark mode
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
 - **State Management**: React Context API
+- **AI Integration**: Groq, OpenAI, Hugging Face
 - **Utilities**: clsx, tailwind-merge
 
 ## 📁 Project Structure
@@ -96,22 +98,48 @@ src/
 
 ## 🛠️ Getting Started
 
+### Prerequisites
+
+- Node.js 18+ 
+- API keys for:
+  - Groq API (for chat)
+  - Hugging Face API (for image generation)
+  - OpenAI API (optional, for file uploads)
+
+### Local Development
+
 1. **Install Dependencies**
 
    ```bash
-   npm install
+   npm run install:all
    ```
 
-2. **Start Development Server**
+2. **Set up Environment Variables**
+
+   Create a `.env` file in the root directory:
+   ```bash
+   GROQ_API_KEY=your_groq_api_key_here
+   HUGGING_FACE_API_KEY=your_hugging_face_api_key_here
+   OPENAI_API_KEY=your_openai_api_key_here
+   OPENAI_ASSISTANT_ID=your_openai_assistant_id_here
+   ```
+
+3. **Start Development Servers**
 
    ```bash
    npm run dev
    ```
 
-3. **Build for Production**
+   This will start both the client (port 3000) and server (port 5001).
+
+4. **Build for Production**
    ```bash
    npm run build
    ```
+
+### Deployment
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions to Vercel.
 
 ## 🎯 Usage
 
@@ -152,8 +180,11 @@ Use Tailwind classes and custom CSS in `index.css`.
 
 ## 🚀 Next Steps
 
-- [ ] Backend API integration
-- [ ] OpenAI API connection
+- [x] Backend API integration
+- [x] OpenAI API connection
+- [x] Groq API integration
+- [x] Hugging Face image generation
+- [x] File upload support
 - [ ] User authentication
 - [ ] Database persistence
 - [ ] Real-time features
